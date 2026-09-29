@@ -18,8 +18,8 @@
 
 | Mục | Nội dung |
 |-----|----------|
-| Public URL | https://agent-production-6673.up.railway.app |
-| Platform | Railway (Dockerfile builder, project `day12-agent`, service `agent`) |
+| Public URL | https://zero2715-day12-prod.onrender.com |
+| Platform | Render (Blueprint từ `render.yaml`, Docker runtime, free plan) |
 | Ngày deploy | 2026-09-29 |
 
 ## Biến Môi Trường Đã Set Trên Cloud
@@ -28,9 +28,9 @@ Ghi tên biến và **nguồn giá trị**, không ghi giá trị:
 
 | Biến | Đã set | Ghi chú |
 |------|--------|---------|
-| `PORT` | ✅ | platform tự gán |
+| `PORT` | ✅ | Render tự gán |
 | `AGENT_API_KEY` | ✅ | đặt trong dashboard, không nằm trong repo |
-| `REDIS_URL` | ✅ | Redis database của Railway, tham chiếu `${{Redis.REDIS_URL}}` (private network) |
+| `REDIS_URL` | ✅ | Render Key Value `day12-redis` (free), lấy từ `fromService` trong `render.yaml`, chỉ nhận kết nối nội bộ |
 | `RATE_LIMIT_PER_MINUTE` | ✅ | 10 |
 | `MONTHLY_BUDGET_USD` | ✅ | 10.0 |
 | `LOG_LEVEL` | ✅ | INFO |
