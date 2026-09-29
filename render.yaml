@@ -5,10 +5,12 @@
 
 services:
   - type: web
-    name: day12-agent
+    name: 02715-day12-prod
     runtime: docker
     dockerfilePath: ./Dockerfile
     plan: free
+    # Chỉ deploy qua GitHub Actions (deploy hook) sau khi test + build xanh
+    autoDeployTrigger: "off"
     healthCheckPath: /health
     envVars:
       - key: AGENT_API_KEY

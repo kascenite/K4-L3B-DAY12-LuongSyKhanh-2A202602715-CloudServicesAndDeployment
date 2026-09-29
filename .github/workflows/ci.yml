@@ -35,18 +35,16 @@ jobs:
     needs: [test, build]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
-    env:
-      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
-      - name: Install Railway CLI
-        run: npm install -g @railway/cli@5
-      - name: Deploy to Railway
-        run: railway up --ci --service "${{ vars.RAILWAY_SERVICE }}"
+      - name: Trigger Render deploy
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: curl -fsS -X POST "$RENDER_DEPLOY_HOOK_URL"
       - name: Smoke test
+        # Free tier ngủ đông + build mất vài phút → chờ tối đa ~10 phút
         run: |
-          for i in $(seq 1 12); do
-            curl -fsS "${{ vars.PUBLIC_URL }}/health" && exit 0
-            sleep 10
+          for i in $(seq 1 40); do
+            curl -fsS --max-time 60 "${{ vars.PUBLIC_URL }}/health" && exit 0
+            sleep 15
           done
           exit 1
